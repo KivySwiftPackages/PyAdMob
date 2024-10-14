@@ -2,7 +2,9 @@
 import Foundation
 import UIKit
 import GoogleMobileAds
-import PythonSwiftCore
+import PySwiftCore
+import PyEncode
+import PythonCore
 
 fileprivate var kivy_viewController: UIViewController? {
 	UIApplication.shared.windows.first?.rootViewController
@@ -62,6 +64,8 @@ public class BannerAd {
 	
 }
 
+
+
 public class StaticAd {
 	
 	var banner: GADBannerView?
@@ -114,6 +118,30 @@ public class StaticAd {
 	}
 }
 
+
+
+
+extension PyFullScreenContentDelegate {
+	func adDidRecordClick(_ ad: GADFullScreenPresentingAd) {
+		adDidRecordClick(info: ad.description)
+	}
+	func adDidRecordImpression(_ ad: GADFullScreenPresentingAd) {
+		adDidRecordImpression(info: ad.description)
+	}
+	func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+		adDidDismissFullScreenContent(info: ad.description)
+	}
+	func adWillDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+		adDidDismissFullScreenContent(info: ad.description)
+	}
+	func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+		adWillPresentFullScreenContent(info: ad.description)
+	}
+	func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+		didFailToPresentFullScreenContent(info: ad.description, error: error.localizedDescription)
+	}
+}
+
 public class FullScreenAd {
 	
 	
@@ -146,25 +174,22 @@ public class FullScreenAd {
 	}
 }
 
-extension PyFullScreenContentDelegate: PyConvertible {
-	public var pyObject: PythonObject { .init(getter: pyPointer) }
-	public var pyPointer: PyPointer { create_pyPyFullScreenContentDelegate(self) }
+extension PyFullScreenContentDelegate: PyEncodable {
+	public var pyPointer: PyPointer { Self.asPyPointer(self) }
 }
 
 extension GADFullScreenPresentingAd {
-	var pyPointer: PyPointer { create_pyGADFullScreenPresentingAd(self) }
-	func __repr__() -> String {
-		self.debugDescription ?? "no info"
-	}
+//	var pyPointer: PyPointer { Self.asPyPointer(self) }
+//	func __repr__() -> String {
+//		self.debugDescription ?? "no info"
+//	}
 }
 
 extension GADBannerView: PyConvertible {
-	public var pyObject: PythonObject { .init(getter: pyPointer) }
-	public var pyPointer: PyPointer { create_pyGADBannerView(self) }
+	public var pyPointer: PyPointer { Self.asPyPointer(self) }
 }
 
 extension PyBannerViewDelegate: PyConvertible {
-	public var pyObject: PythonObject { .init(getter: pyPointer) }
-	public var pyPointer: PyPointer { create_pyPyBannerViewDelegate(self) }
+	public var pyPointer: PyPointer { Self.asPyPointer(self) }
 }
 

@@ -11,9 +11,9 @@ let package = Package(
 		
 	],
 	dependencies: [
-		.package(url: "https://github.com/PythonSwiftLink/KivySwiftLink", from: .init(311, 0, 0)),
-		.package(url: "https://github.com/PythonSwiftLink/SwiftonizePlugin", from: .init(0, 0, 0)),
-		.package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads", branch: "main")
+		.package(url: "https://github.com/KivySwiftLink/PythonSwiftLink", from: .init(311, 0, 0)),
+		.package(url: "https://github.com/PythonSwiftLink/SwiftonizePlugin", .upToNextMajor(from: .init(0, 1, 0)) ),
+		.package(url: "https://github.com/googleads/swift-package-manager-google-mobile-ads", exact: .init(11, 5, 0))
 	],
 	targets: [
 
@@ -21,8 +21,8 @@ let package = Package(
 			name: "PyAdmob",
 			dependencies: [
 //				"PythonLib",
-				.product(name: "PythonSwiftCore", package: "KivySwiftLink"),
-				.product(name: "PySwiftObject", package: "KivySwiftLink"),
+				.product(name: "SwiftonizeModules", package: "PythonSwiftLink"),
+				//.product(name: "PySwiftObject", package: "KivySwiftLink"),
 				// admob package
 				.product(name: "GoogleMobileAds", package: "swift-package-manager-google-mobile-ads")
 			],
