@@ -3,7 +3,7 @@ import Foundation
 import UIKit
 import GoogleMobileAds
 import PySwiftCore
-import PyEncode
+import PySerializing
 import PythonCore
 
 fileprivate var kivy_viewController: UIViewController? {
@@ -174,7 +174,7 @@ public class FullScreenAd {
 	}
 }
 
-extension PyFullScreenContentDelegate: PyEncodable {
+extension PyFullScreenContentDelegate: PySerialize {
 	public var pyPointer: PyPointer { Self.asPyPointer(self) }
 }
 
@@ -185,11 +185,11 @@ extension GADFullScreenPresentingAd {
 //	}
 }
 
-extension GADBannerView: PyConvertible {
+extension GADBannerView: PySerializing.PySerialize {
 	public var pyPointer: PyPointer { Self.asPyPointer(self) }
 }
 
-extension PyBannerViewDelegate: PyConvertible {
+extension PyBannerViewDelegate: PySerializing.PySerialize {
 	public var pyPointer: PyPointer { Self.asPyPointer(self) }
 }
 
